@@ -21,7 +21,7 @@ counter = 0
 
 for url in urls:
   article = NewsPlease.from_url(url)
-  articles.append((article.title, article.maintext))
+  articles.append((article.title, url, article.maintext))
   print(str(counter), " out of ", str(len(urls)), " done redirecting")
   counter += 1
 
@@ -30,4 +30,6 @@ with open("./articles.txt", "a") as f:
     f.write(article[0])
     f.write("|")
     f.write(article[1])
+    f.write("|")
+    f.write(article[2])
     f.write('\n')
