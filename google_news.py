@@ -1,5 +1,6 @@
 from newsplease import NewsPlease
 import requests
+from urllib.error import HTTPError
 
 f = open("links.txt", 'r')
 links = []
