@@ -15,7 +15,6 @@ articles = []
 for i in range(0, len(urls)):
   r = requests.get(urls[i])
   print(str(i), " out of ", str(len(urls)), " done redirecting")
-  #urls[i] = r.url
   article = NewsPlease.from_url(r)
   articles.append((article.title, r, article.maintext))
   print(str(i), " out of ", str(len(urls)), " scraped")
