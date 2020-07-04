@@ -18,10 +18,8 @@ for i in range(0, len(urls)):
   try: 
     article = NewsPlease.from_url(r.url)
     articles.append((article.title, r, article.maintext))
-    break
   except HTTPError:
     print(r.url + " failed")
-    break
 
 
   print(str(i), " out of ", str(len(urls)), " scraped")
