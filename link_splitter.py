@@ -10,7 +10,7 @@ file_names =[]
 while counter <= (len(links) // 100 -1):
   file_name = "links" + str(counter) + ".txt"
   file_names.append(file_name)
-  with open(file_name, "a") as f:
+  with open(file_name, "w") as f:
     print(counter * 100, (counter * 100) + 100)
     for i in range(counter * 100, (counter * 100) + 100):
       f.write(links[i])
