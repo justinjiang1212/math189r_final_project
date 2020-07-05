@@ -5,14 +5,6 @@ for x in f:
 
 counter = 0
 
-with open("./articles.txt", "a") as f:
-  for article in articles:
-    f.write(article[0])
-    f.write("|")
-    f.write(article[1])
-    f.write("|")
-    f.write(article[2])
-    f.write('\n')
 
 while counter <= (len(links) // 100):
   file_name = "links" + str(counter) + ".txt"
