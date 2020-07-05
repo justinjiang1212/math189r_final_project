@@ -7,15 +7,24 @@ sid = SentimentIntensityAnalyzer()
 
 truncated = pd.read_csv('/Users/andyliu/Downloads/truncated.csv')
 
+count = {}
+n =  0
+total_sentiments = {}
+topic_counts = {}
+current_docname = None
+last_sentiment = None
+topic_weights = {}
+
+
 #now that text sent model has been trained, iterate through news articles
 with open('/Users/andyliu/Downloads/doc-topics.csv', newline='') as csvfile:
+<<<<<<< HEAD
+=======
     count = {}
     total_sentiments = {}
     topic_counts = {}
+>>>>>>> parent of 36ef54e... asdfasfffew
     reader = csv.reader(csvfile, delimiter=' ', quotechar='|')
-    current_docname = None
-    last_sentiment = None
-    topic_weights = {}
     first_row = next(reader)
 
     for row in reader:
@@ -59,6 +68,10 @@ with open('/Users/andyliu/Downloads/doc-topics.csv', newline='') as csvfile:
 
     for key in total_sentiments.keys():
         value = total_sentiments[key]/topic_counts[key]
+<<<<<<< HEAD
+        string = str(key) + "," + str(value) + "\n"
+        output.write(string)
+=======
         string = key + "," + value + "\n"
         output.write(string)
 
@@ -72,3 +85,4 @@ def getText(index):
 def textsent(text):
     #get text sentiment of an article text, somehow
     return(sid.polarity_scores(text))
+>>>>>>> parent of 36ef54e... asdfasfffew
