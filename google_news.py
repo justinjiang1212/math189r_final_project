@@ -9,13 +9,14 @@ links = []
 for x in f:
   links.append(x)
 
+print(len(links))
 urls = []
 for link in links:
   urls.append("https://news.google.com" + link[1:-2])
 
 articles = []
 
-for i in range(0, 100):
+for i in range(0, len(urls)):
   r = requests.get(urls[i])
   print(str(i), " out of ", str(len(urls)), " done redirecting")
   try: 

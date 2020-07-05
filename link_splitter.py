@@ -31,6 +31,6 @@ with open(file_name, "w") as f:
 f.close
 
 
-#for file in file_names:
-#  command = "python3 google_news.py " + file
- # os.system(command)
+for file in file_names:
+  command = "python3 google_news.py " + file
+  os.system(command)
