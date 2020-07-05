@@ -13,7 +13,7 @@ for link in links:
 
 articles = []
 
-for i in range(0, len(urls)):
+for i in range(0, 100):
   r = requests.get(urls[i])
   print(str(i), " out of ", str(len(urls)), " done redirecting")
   try: 
@@ -22,6 +22,17 @@ for i in range(0, len(urls)):
   except HTTPError:
     print(r.url + " failed")
 
+  print(str(i), " out of ", str(len(urls)), " scraped")
+
+
+for i in range(100, 200):
+  r = requests.get(urls[i])
+  print(str(i), " out of ", str(len(urls)), " done redirecting")
+  try: 
+    article = NewsPlease.from_url(r.url)
+    articles.append((article.title, r, article.maintext))
+  except HTTPError:
+    print(r.url + " failed")
 
   print(str(i), " out of ", str(len(urls)), " scraped")
 
