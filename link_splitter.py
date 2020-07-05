@@ -12,13 +12,12 @@ while counter <= (len(links) // 100 -1):
   file_names.append(file_name)
   if os.path.exists(file_name):
     os.remove(file_name)
+    print(file_name + " removed")
   with open(file_name, "w") as f:
     print(counter * 100, (counter * 100) + 100)
     for i in range(counter * 100, (counter * 100) + 100):
       f.write(links[i])
       f.write("\n")
-
-    
   counter += 1
 
 file_name = "links" + str(counter) + ".txt"
