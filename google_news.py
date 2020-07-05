@@ -4,10 +4,10 @@ from urllib.error import HTTPError
 import sys
 file = sys.argv[1]
 
-f = open(file, 'r')
-links = []
-for x in f:
-  links.append(x)
+
+a_file = open(file, 'r')
+file_contents = a_file.read()
+links = file_contents.splitlines()
 
 print(len(links))
 urls = []
