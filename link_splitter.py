@@ -6,7 +6,7 @@ for x in f:
 counter = 0
 
 
-while counter <= (len(links) // 100 + 1):
+while counter <= (len(links) // 100 -1):
   file_name = "links" + str(counter) + ".txt"
   with open(file_name, "a") as f:
     for i in range(counter * 100, (counter * 100) + 100):
