@@ -17,7 +17,7 @@ while counter <= (len(links) // 100 -1):
     print(counter * 100, (counter * 100) + 100)
     for i in range(counter * 100, (counter * 100) + 100):
       f.write(links[i])
-      f.write("\n")
+      #f.write("\n")
   f.close
   counter += 1
   
@@ -27,7 +27,7 @@ file_names.append(file_name)
 with open(file_name, "w") as f:
   for i in range((counter -1) * 100, len(links)):
     f.write(links[i])
-    f.write("\n")
+    #f.write("\n")
 f.close
 
 
