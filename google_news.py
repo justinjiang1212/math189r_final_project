@@ -1,12 +1,15 @@
 from newsplease import NewsPlease
 import requests
 from urllib.error import HTTPError
+import sys
+file = sys.argv[1]
 
-f = open("links.txt", 'r')
-links = []
-for x in f:
-  links.append(x)
 
+a_file = open(file, 'r')
+file_contents = a_file.read()
+links = file_contents.splitlines()
+
+print(len(links))
 urls = []
 for link in links:
   urls.append("https://news.google.com" + link[1:-2])
@@ -22,16 +25,11 @@ for i in range(0, len(urls)):
   except HTTPError:
     print(r.url + " failed")
 
-
   print(str(i), " out of ", str(len(urls)), " scraped")
 
 
 
-#for url in urls:
-#  article = NewsPlease.from_url(url)
-#  articles.append((article.title, url, article.maintext))
-#  print(str(counter), " out of ", str(len(urls)), " done redirecting")
-#  counter += 1
+
 
 with open("./articles.txt", "a") as f:
   for article in articles:
