@@ -141,7 +141,7 @@ with open("/home/ec2-user/biden_output.txt","a") as output:
     string = "Topic,Pos,Neg,Neu,Compound\n"
     print(string)
     output.write(string)
-    for key in trump_total_sentiments.keys():
+    for key in biden_total_sentiments.keys():
         pos = biden_total_sentiments[key]['pos']/biden_topic_counts[key]
         neg = biden_total_sentiments[key]['neg']/biden_topic_counts[key]
         neu = biden_total_sentiments[key]['neu']/biden_topic_counts[key]
