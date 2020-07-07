@@ -9,6 +9,7 @@ nltk.download('vader_lexicon')
 sid = SentimentIntensityAnalyzer()
 
 count = 0
+n = 0
 
 trump_indices = []
 biden_indices = []
@@ -108,7 +109,7 @@ with open('/home/ec2-user/doc-topics.csv', newline='') as csvfile:
             #reset variables
             topic_weights = {}
             current_docname = row[0].split(",")[0]
-            count = 0
+            count += 1
             
             #calculate sentiment of new thing
             text_index = str(row[0].split(":")[-1])[0]
