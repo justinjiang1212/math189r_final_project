@@ -3,7 +3,7 @@ import pandas as pd
 import nltk
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 
-truncated = pd.read_csv("/Users/andyliu/Downloads/new_truncated.csv")
+truncated = pd.read_csv("/home/ec2-user/new_truncated.csv")
 
 nltk.download('vader_lexicon')
 sid = SentimentIntensityAnalyzer()
@@ -26,7 +26,7 @@ last_sentiment = None
 topic_weights = {}
 
 #now that text sent model has been trained, iterate through news articles
-with open('/Users/andyliu/Downloads/doc-topics.csv', newline='') as csvfile:
+with open('/home/ec2-user/doc-topics.csv', newline='') as csvfile:
     reader = csv.reader(csvfile, delimiter=' ', quotechar='|')
     first_row = next(reader)
 
@@ -67,7 +67,7 @@ with open('/Users/andyliu/Downloads/doc-topics.csv', newline='') as csvfile:
             n+=1
 
     #write total_sentiment divided by total_weight (topic_counts)
-with open("/Users/andyliu/Downloads/output.txt","a") as output:
+with open("/home/ec2-user/output.txt","a") as output:
     for key in total_sentiments.keys():
         value = total_sentiments[key]/topic_counts[key]
         string = str(key) + "," + str(value) + "\n"
