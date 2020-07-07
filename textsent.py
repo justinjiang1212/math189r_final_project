@@ -49,11 +49,20 @@ with open('/home/ec2-user/doc-topics.csv', newline='') as csvfile:
                 except KeyError:
                     topic_counts[topic] = topic_weights[topic]
                 
-                topic_sentiment = topic_weights[topic] * last_sentiment['pos']
+                pos_sentiment = topic_weights[topic] * last_sentiment['pos']
+                neg_sentiment = topic_weights[topic] * last_sentiment['neg']
+                neu_sentiment = topic_weights[topic] * last_sentiment['neu']
+                compound_sentiment = topic_weights[topic] * last_sentiment['compound']
+
                 try:
-                    total_sentiments[topic] +=  topic_sentiment
+                    total_sentiments[topic]['pos'] += pos_sentiment
+                    total_sentiments[topic]['neg'] += neg_sentiment
+                    total_sentiments[topic]['neu'] += neu_sentiment
+                    total_sentiments[topic]['compound'] += compound_sentiment
+
                 except KeyError:
-                    total_sentiments[topic] = topic_sentiment
+                    total_sentiments[topic] = {'pos':pos_sentiment, 'neg':neg_sentiment, 'neu':neu_sentiment, 'compound':compound_sentiment}
+
 
             #reset variables
             topic_weights = {}
@@ -68,8 +77,14 @@ with open('/home/ec2-user/doc-topics.csv', newline='') as csvfile:
 
     #write total_sentiment divided by total_weight (topic_counts)
 with open("/home/ec2-user/output.txt","a") as output:
+    string = "Topic,Pos,Neg,Neu,Compound\n"
+    print(string)
+    output.write(string)
     for key in total_sentiments.keys():
-        value = total_sentiments[key]/topic_counts[key]
-        string = str(key) + "," + str(value) + "\n"
+        pos = total_sentiments[key]['pos']/topic_counts[key]
+        neg = total_sentiments[key]['neg']/topic_counts[key]
+        neu = total_sentiments[key]['neu']/topic_counts[key]
+        compound = total_sentiments[key]['compound']/topic_counts[key]
+        string = str(int(key)) + "," + str(pos) + "," + str(neg) + "," + str(neu) + "," + str(compound) + "\n"
         print(string)
         output.write(string)
