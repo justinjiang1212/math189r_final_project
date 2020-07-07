@@ -10,11 +10,11 @@ sid = SentimentIntensityAnalyzer()
 
 trump_indices = []
 biden_indices = []
-with open('home/ec2-user/trump.txt', 'r') as trump:
+with open('/home/ec2-user/trump.txt', 'r') as trump:
     for line in trump:
         stripped_line = line.strip()
         trump_indices.append(stripped_line)
-with open('home/ec2-user/biden.txt', 'r') as biden:
+with open('/home/ec2-user/biden.txt', 'r') as biden:
     for line in biden:
         stripped_line = line.strip()
         biden_indices.append(stripped_line)
