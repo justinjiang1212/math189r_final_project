@@ -8,11 +8,11 @@ truncated = pd.read_csv("/home/ec2-user/new_truncated.csv")
 nltk.download('vader_lexicon')
 sid = SentimentIntensityAnalyzer()
 
-count = 0
 n = 0
 
 trump_indices = []
 biden_indices = []
+read = True
 with open('/home/ec2-user/trump.txt', 'r') as trump:
     for line in trump:
         stripped_line = line.strip()
@@ -47,17 +47,18 @@ with open('/home/ec2-user/doc-topics.csv', newline='') as csvfile:
     first_row = next(reader)
 
     for row in reader:
-        docname = row[0].split(",")[0]
+        docname = (row[0].split(",")[0])
 
         if docname==current_docname:
+            if read:
             #still on the same doc, just different topics
-            try:
-                topic_weights[float(row[0].split(",")[1])] += float(row[0].split(",")[2])
-            except KeyError:
-                topic_weights[float(row[0].split(",")[1])] = float(row[0].split(",")[2])
+                try:
+                    topic_weights[float(row[0].split(",")[1])] += float(row[0].split(",")[2])
+                except KeyError:
+                    topic_weights[float(row[0].split(",")[1])] = float(row[0].split(",")[2])
         else:
             #new doc!
-            if count == 0:
+            if n == 0:
                 current_docname = docname
             #check if in trump or biden
             if current_docname.split(":")[-1] in trump_indices:
@@ -109,13 +110,17 @@ with open('/home/ec2-user/doc-topics.csv', newline='') as csvfile:
             #reset variables
             topic_weights = {}
             current_docname = row[0].split(",")[0]
-            count += 1
             
             #calculate sentiment of new thing
             text_index = str(row[0].split(":")[-1])[0]
-            text = getText(int(text_index))
-            last_sentiment = textsent(text)
-            print(str(n) + ": " + str(last_sentiment))
+            if ((text_index in trump_indices) or (text_index in biden_indices)):
+                text = getText(int(text_index))
+                last_sentiment = textsent(text)
+                print(str(n) + ": " + str(last_sentiment))
+                read = True
+            else:
+                last_sentiment = {'pos':0, 'neg':0, 'neu':0, 'compound':0}
+                read = False
             n+=1
 
     #write total_sentiment divided by total_weight (topic_counts)
