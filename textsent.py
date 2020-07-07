@@ -31,8 +31,6 @@ with open('/Users/andyliu/Downloads/doc-topics.csv', newline='') as csvfile:
     first_row = next(reader)
 
     for row in reader:
-        if n > 1000:
-            break
         docname = row[0].split(",")[0]
 
         if docname==current_docname:
