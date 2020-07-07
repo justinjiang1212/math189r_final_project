@@ -8,6 +8,8 @@ truncated = pd.read_csv("/home/ec2-user/new_truncated.csv")
 nltk.download('vader_lexicon')
 sid = SentimentIntensityAnalyzer()
 
+count = 0
+
 trump_indices = []
 biden_indices = []
 with open('/home/ec2-user/trump.txt', 'r') as trump:
@@ -54,7 +56,8 @@ with open('/home/ec2-user/doc-topics.csv', newline='') as csvfile:
                 topic_weights[float(row[0].split(",")[1])] = float(row[0].split(",")[2])
         else:
             #new doc!
-
+            if count == 0:
+                current_docname = docname
             #check if in trump or biden
             if current_docname.split(":")[-1] in trump_indices:
                 for topic in topic_weights.keys():
@@ -105,6 +108,7 @@ with open('/home/ec2-user/doc-topics.csv', newline='') as csvfile:
             #reset variables
             topic_weights = {}
             current_docname = row[0].split(",")[0]
+            count = 0
             
             #calculate sentiment of new thing
             text_index = str(row[0].split(":")[-1])[0]
