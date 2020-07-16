@@ -73,3 +73,20 @@ with open("/home/ec2-user/output.txt","a") as output:
         string = str(key) + "," + str(value) + "\n"
         print(string)
         output.write(string)
+
+trump = []
+biden = []
+for i in range(0, len(data)):
+    text = str(data.iloc[i])
+    words = text.split()
+
+    if "Trump" in words:
+        print( str(i) + " in trump")
+        trump.append((text, i))
+
+    if "Biden" in words:
+        print( str(i) + " in Biden")
+        biden.append((text, i))
+
+    print(str(i) + " out of " + str(len(data)) + " done")
+
