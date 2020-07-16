@@ -12,26 +12,31 @@ from datetime import datetime
 linklist = []
 
 def scrape(link):
-    url = "https://news.google.com" + str(link[1:-2])
-    r = requests.get(url)
-    article = Article(r.url, language = "en")
-    article.download()
-    article.parse()
-    with open("./articles.txt", "a") as f:
-        if article.text is not None or article.title is not None:
-          f.write(str(article.title))
-          f.write("|")
+    try: 
+        url = "https://news.google.com" + str(link[1:-2])
+        r = requests.get(url)
+        article = Article(r.url, language = "en")
+        article.download()
+        article.parse()
+        with open("./articles.txt", "a") as f:
 
-          f.write(r.url)
-          f.write("|")
+            if article.text is not None or article.title is not None:
+                f.write(str(article.title))
+                f.write("|")
 
-          f.write(str(datetime.now()))
-          f.write("|")
+                f.write(r.url)
+                f.write("|")
 
-          f.write(str(article.text).replace('\n', ' '))
-          f.write('\n')
+                f.write(str(datetime.now()))
+                f.write("|")
 
-          print(str(article.title) + " is done")
+                f.write(str(article.text).replace('\n', ' '))
+                f.write('\n')
+
+                print(str(article.title) + " is done")
+    except:
+        print(r.url + " failed")
+
 
 
 while True:
@@ -51,3 +56,4 @@ while True:
         f.close()
 
     time.sleep(60)
+    print(str(datetime.now))
