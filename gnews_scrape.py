@@ -10,35 +10,48 @@ from socket import error as socket_error
 from datetime import datetime
 
 linklist = []
-
+article_titles = []
+article_links = []
 def scrape(link):
-    url = "https://news.google.com" + str(link[1:-2])
-    r = requests.get(url)
-    article = Article(r.url, language = "en")
-    article.download()
-    article.parse()
-    with open("./articles.txt", "a") as f:
-        if article.text is not None or article.title is not None:
-          f.write(str(article.title))
-          f.write("|")
+    try: 
+        url = "https://news.google.com" + str(link[1:-2])
+        r = requests.get(url, timeout = 20)
+        article = Article(r.url, language = "en")
+        article.download()
+        article.parse()
 
-          f.write(r.url)
-          f.write("|")
+        article_titles.append(article.title)
+        article_links.append(r.url)
 
-          f.write(str(datetime.now()))
-          f.write("|")
+        with open("./articles.txt", "a") as f:
 
-          f.write(str(article.text).replace('\n', ' '))
-          f.write('\n')
+            if article.text is not None or article.title is not None or article.title not in article_titles or r.url not in article_links:
+                f.write(str(article.title))
+                f.write("|")
 
-          print(str(article.title) + " is done")
+                f.write(r.url)
+                f.write("|")
+
+                f.write(str(datetime.now()))
+                f.write("|")
+
+                f.write(str(article.text).replace('\n', ' '))
+                f.write('\n')
+
+                print(str(article.title) + " is done")
+        url = r.url
+    except:
+        print(url + " failed")
+
 
 
 while True:
     with open("./links.txt", "a") as f:
-        html_page = urllib.request.urlopen("https://news.google.com/topics/CAAqBwgKMOfAkAsw0bukAw?hl=en-US&gl=US&ceid=US%3Aen")
+        html_page = urllib.request.urlopen("https://news.google.com/topics/CAAqIggKIhxDQkFTRHdvSkwyMHZNR054ZERrd0VnSmxiaWdBUAE?hl=en-US&gl=US&ceid=US%3Aen")
         soup = BeautifulSoup(html_page, 'lxml')
         links = soup.findAll('a', {'class': ['VDXfz']})
+
+        counter = 0
 
         for link in links:
             if link['href'] not in linklist:
@@ -46,8 +59,11 @@ while True:
                 f.write(link['href'])
                 f.write('\n')
                 scrape(link['href'])
+                print(str(counter) + " out of " + str(len(links)))
+                counter += 1
 
         print(len(linklist))
         f.close()
-
+    print(str(datetime.now()))
     time.sleep(60)
+    
